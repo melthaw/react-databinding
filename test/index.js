@@ -1,6 +1,6 @@
 /* eslint-disable max-nested-callbacks */
 import { expect } from 'chai';
-import Rf from '../src/rf';
+import Builder from '../src';
 
 const data = [
 	{
@@ -24,29 +24,29 @@ const data = [
 describe("optional", () => {
 	describe("of", () => {
 		it("origin value", ()=> {
-			let totalFats = Rf.of(data).at('1.fats.total').value();
+			let totalFats = Builder.of(data).at('1.fats.total').value();
 			expect(totalFats).to.equal(3);
 		})
 		it("mapped value", ()=> {
-			let totalFats = Rf.of(data).at('1.fats.total').map(v => v + 1).value();
+			let totalFats = Builder.of(data).at('1.fats.total').map(v => v + 1).value();
 			expect(totalFats).to.equal(4);
 		})
 		it("unexisted path1", ()=> {
-			let totalFats = Rf.of(data).at('3.fats.total').value();
+			let totalFats = Builder.of(data).at('3.fats.total').value();
 			expect(totalFats).to.equal(undefined);
 		})
 		it("unexisted path2", ()=> {
-			let totalFats = Rf.of(data).at('0.fats.minerals.unexisted').value();
+			let totalFats = Builder.of(data).at('0.fats.minerals.unexisted').value();
 			expect(totalFats).to.equal(undefined);
 		})
 	});
 	describe("either", () => {
 		it("without default", ()=> {
-			let totalFats = Rf.either(null, null).at('1.fats.total').value();
+			let totalFats = Builder.either(null, null).at('1.fats.total').value();
 			expect(totalFats).to.equal(undefined);
 		})
 		it("with default", ()=> {
-			let totalFats = Rf.either(data, null).at('1.fats.total').value();
+			let totalFats = Builder.either(data, null).at('1.fats.total').value();
 			expect(totalFats).to.equal(3);
 		})
 	});

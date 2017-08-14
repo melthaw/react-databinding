@@ -1,3 +1,4 @@
-export of from './of';
-export either from './either';
-export Rf from './rf';
+import of from './of';
+import either from './either';
+
+export default {of, either};
