@@ -62,6 +62,36 @@ let item = data[1];
 if (item != null) {
 	let fats = item.fats;
 	if (fats != null) {
+		let total = fats.total;//3
+	}
+}
+
+```
+
+after
+
+```javascript
+import F,{Optional} from 'react-redux-data-binding';
+
+(new Optional(data)).at('1.fats.total').value();//3
+
+//or
+
+F.of(data).at('1.fats.total').value();//3
+
+```
+
+case 2: convert the data
+
+
+before
+
+```javascript
+
+let item = data[1];
+if (item != null) {
+	let fats = item.fats;
+	if (fats != null) {
 		let total = fats.total;
 		if (total != null) {
 			total = total + 1; //4
@@ -84,36 +114,26 @@ F.of(data).at('1.fats.total').map(v -> v+1).value();//4
 
 ```
 
-case 2: convert the data
+## immutable
 
-
-before
-
-```javascript
-
-let item = data[1];
-if (item != null) {
-	let fats = item.fats;
-	if (fats != null) {
-		let total = fats.total;//3
-	}
-}
-
-```
-
-after
+Yes , immutable is supported as well.
+The APIs is designed exactly matched as previous, the different is import part.
 
 ```javascript
-import F,{Optional} from 'react-redux-data-binding';
-
-(new Optional(data)).at('1.fats.total').value();//3
-
-//or
-
-F.of(data).at('1.fats.total').value();//3
-
+import F from 'react-redux-data-binding/immutable';
 ```
 
+And make sure the args you passed to F.of is an immutable object.
+
+```javascript
+import { fromJS } from 'immutable';
+import F from 'react-redux-data-binding/immutable';
+
+let immutableData = fromJS(data);
+
+F.of(immutableData).at('1.fats.total').map(v -> v+1).value();//4
+
+```
 
 # `react-redux-data-binding` helper
 
