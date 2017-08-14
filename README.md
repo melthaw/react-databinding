@@ -52,18 +52,25 @@ const data = [
 ```
 
 
-case 1: general
+case 1: iterate the data and get the value
+
+before
+
+```javascript
+
+let item = data[1];
+if (item != null) {
+	let fats = item.fats;
+	if (fats != null) {
+		let total = fats.total;//3
+	}
+}
 
 ```
 
+after
 
-```
-
-
-case 1: functor
-
-
-```
+```javascript
 import F,{Optional} from 'react-redux-data-binding';
 
 (new Optional(data)).at('1.fats.total').value();//3
@@ -74,12 +81,7 @@ F.of(data).at('1.fats.total').value();//3
 
 ```
 
-case 2: promise
-
-
-
-case 3: monad
-
+case 2: convert the data
 
 
 
