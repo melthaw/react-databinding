@@ -22,7 +22,13 @@ First, install
 > npm install react-redux-data-binding --save
 ```
 
-Then let's prepare the data
+And import the `react-redux-data-binding`
+
+```
+import F from 'react-redux-data-binding';
+```
+
+Now let's prepare the data to show the usage
 
 ```javascript
 const data = [
@@ -45,13 +51,6 @@ const data = [
 ];
 ```
 
-And let import the `react-redux-data-binding`
-
-```
-import {rf} from 'react-redux-data-binding';
-```
-
-`rf` is the of `react-redux-data-binding` and designed as a functor.
 
 case 1: general
 
@@ -65,13 +64,13 @@ case 1: functor
 
 
 ```
-import {f} from 'react-redux-data-binding';
+import F,{Optional} from 'react-redux-data-binding';
 
-
-f(this.props).at('hello.world.size').map().();
+(new Optional(data)).at('1.fats.total').value();//3
 
 //or
 
+F.of(data).at('1.fats.total').value();//3
 
 ```
 
