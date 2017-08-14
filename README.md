@@ -24,7 +24,7 @@ First, install
 
 And import the `react-redux-data-binding`
 
-```
+```javascript
 import F from 'react-redux-data-binding';
 ```
 
@@ -62,6 +62,39 @@ let item = data[1];
 if (item != null) {
 	let fats = item.fats;
 	if (fats != null) {
+		let total = fats.total;
+		if (total != null) {
+			total = total + 1; //4
+		}
+	}
+}
+
+```
+
+after
+
+```javascript
+import F,{Optional} from 'react-redux-data-binding';
+
+(new Optional(data)).at('1.fats.total').map(v -> v+1).value();//4
+
+//or
+
+F.of(data).at('1.fats.total').map(v -> v+1).value();//4
+
+```
+
+case 2: convert the data
+
+
+before
+
+```javascript
+
+let item = data[1];
+if (item != null) {
+	let fats = item.fats;
+	if (fats != null) {
 		let total = fats.total;//3
 	}
 }
@@ -80,9 +113,6 @@ import F,{Optional} from 'react-redux-data-binding';
 F.of(data).at('1.fats.total').value();//3
 
 ```
-
-case 2: convert the data
-
 
 
 # `react-redux-data-binding` helper
