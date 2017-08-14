@@ -27,7 +27,7 @@ const buildUpdater = (path) => (value) => {
  *
  * @param ctx this ref of current component
  */
-const doChange = (ctx) => (path) = (value)=> {
+const doChange = (ctx) => (path) => (value)=> {
 	ctx.setState(buildUpdater(path, value));
 }
 
