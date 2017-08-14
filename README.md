@@ -18,14 +18,31 @@ What we want to resolved listed as follow:
 
 First, install
 
-```
+```sh
 > npm install react-redux-data-binding --save
 ```
 
 Then let's prepare the data
 
-```
-
+```javascript
+const data = [
+	{
+		calories: {total: 0, fat: 0},
+		vitamins: {a: {total: 0, retinol: 0}, b6: 0, c: 0},
+		fats: {total: 0},
+		minerals: {calcium: 0}
+	},
+	{
+		calories: {total: 150, fat: 40},
+		vitamins: {a: {total: 100}, b6: 30, c: 200},
+		fats: {total: 3}
+	},
+	{
+		calories: {total: 100, fat: 60},
+		vitamins: {a: {total: 120, retinol: 10}, b6: 0, c: 200},
+		minerals: {calcium: 20}
+	}
+];
 ```
 
 And let import the `react-redux-data-binding`
