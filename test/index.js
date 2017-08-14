@@ -1,6 +1,6 @@
 /* eslint-disable max-nested-callbacks */
 import { expect } from 'chai';
-import F from '../src';
+import { F } from '../src';
 
 const data = [
 	{
