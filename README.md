@@ -26,7 +26,7 @@ So we have to write down much code to handle the technical problem not focus on 
 ### one-way & two-way binding
 
 There are many solutions to implement one-way or two-way binding in React world ,
-but we like more simple and less coding API if we use it in the render function.
+but we like more simple and less coding API if we use it in the `render()` function.
 
 Here we will show how to get the easiest to understand and simplest to use one-way and two-way data binding in React Component.
 
@@ -66,12 +66,12 @@ class ImmutableComponent extends React.Component {
 }
 ```
 
-Nothing special, just one more line to create a curried $ function which will do the left work in the JSX part.
+Nothing special, just one more line to create a curried `$` function which will do the left work in the JSX part.
 
 As you see, it's quite simple to do one-way binding ,
-the magic is $ function , it accept the path ('data.title') and evaluate based on the Component's props.
+the magic is `$` function , it accept the path (**'data.title'**) and evaluate based on the Component's props.
 
-One more thing, the $ function can accept a default value or a lambda callback
+One more thing, the `$` function can accept a default value or a lambda callback
 which will be very useful if you want to handle the null eval result.
 
 ```javascript
@@ -83,13 +83,13 @@ const todolist = [{
 
 ```
 
-Show 'unknown' if the author not defined in todo
+Show `'unknown'` if the author not defined in todo
 
 ```javascript
 $('todolist.0.author','unknown')
 ```
 
-Show comma-joined tags
+Show **comma-joined** tags
 
 ```javascript
 $('todolist.0.tags', v => v ? v.join(','):'unknow')
