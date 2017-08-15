@@ -25,39 +25,44 @@ describe("optional", () => {
 	describe("of", () => {
 		it("origin value", ()=> {
 			let totalFats = F.of(data).at('1.fats.total').value();
-			expect(totalFats).to.equal(3);
+			expect(totalFats).to.be.equal(3);
 		})
 		it("mapped value", ()=> {
 			let totalFats = F.of(data).at('1.fats.total').map(v => v + 1).value();
-			expect(totalFats).to.equal(4);
+			expect(totalFats).to.be.equal(4);
+		})
+		it("",()=> {
+			let fats = F.of(data).at('1.fats').value();
+			expect(fats).to.be.deep.equal({total: 3});
+
 		})
 		it("unexisted path1", ()=> {
 			let totalFats = F.of(data).at('3.fats.total').value();
-			expect(totalFats).to.equal(undefined);
+			expect(totalFats).to.be.equal(undefined);
 		})
 		it("unexisted path2", ()=> {
 			let totalFats = F.of(data).at('0.fats.minerals.unexisted').value();
-			expect(totalFats).to.equal(undefined);
+			expect(totalFats).to.be.equal(undefined);
 		})
 	});
 	describe("either", () => {
 		it("without default", ()=> {
 			let totalFats = F.either(null, null).at('1.fats.total').value();
-			expect(totalFats).to.equal(undefined);
+			expect(totalFats).to.be.equal(undefined);
 		})
 		it("with default", ()=> {
 			let totalFats = F.either(data, null).at('1.fats.total').value();
-			expect(totalFats).to.equal(3);
+			expect(totalFats).to.be.equal(3);
 		})
 	});
 	describe("default", () => {
 		it("default value", ()=> {
 			let totalFats = F.of(data).at('1.fats.notexisted').value('zero');
-			expect(totalFats).to.equal('zero');
+			expect(totalFats).to.be.equal('zero');
 		})
 		it("default func", ()=> {
 			let totalFats = F.of(data).at('1.fats.notexisted').value(v => 'two');
-			expect(totalFats).to.equal('two');
+			expect(totalFats).to.be.equal('two');
 		})
 	});
 });
