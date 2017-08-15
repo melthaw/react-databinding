@@ -16,13 +16,100 @@ What we want to resolved listed as follow:
 ## Get started
 
 
-First, install
+## install
 
 ```sh
 > npm install react-redux-data-binding --save
 ```
 
-And import the `react-redux-data-binding`
+# one-way & two-way binding
+
+There are many solutions to implement one-way or two-way binding in react world ,
+but we like more simple and less coding API if we use it in the render function.
+
+Here we will show how to get the easiest to understand and simplest to use one-way and two-way data binding in react Component.
+
+case 1: one-way binding
+
+First, let's prepare the container Component to create a component and pass something as props to it.
+
+```javascript
+const data = {
+	title:'hello world',
+	body:'blablablabla...'
+}
+
+const case1 = () => (
+	<ImmutableComponent data={data}/>
+)
+
+```
+
+Then goes to the `ImmutableComponent` which we will show the one-way binding
+
+```javascript
+import {React} from 'react';
+import {oneWayBind} from 'react-redux-data-binding';
+
+class ImmutableComponent extends React.Component {
+
+	render() {
+		// $ is curried function and please feel free to rename it in your project.
+		let $ = oneWayBind(this.props);
+		// 'hello world' will be shown as the h1 title
+		return (
+			<div><h1>{$('data.title')}</h1></div>
+		);
+	}
+
+}
+```
+
+Nothing special, just one more line to create a curried $ function which will do the left work in the JSX part.
+
+As you see, it's quite simple to do one-way binding ,
+the magic is $ function , it accept the path ('data.title') and evaluate based on the Component's props.
+
+More complex path is supported, the array index is taken as the key of object , please feel free to try it out.
+
+For example:
+* todo.author.name
+* todo.tags.0
+
+One more thing, the $ function can accept a default value or a lambda callback
+which will be very useful if you want to handle the null eval result.
+
+```javascript
+const todolist = [{
+	title: 'complete the readme before this weekend' ,
+	tags: ['help','doc'],
+	status: 'pending'
+}];
+
+```
+
+Show 'unknown' if the author not defined in todo
+
+```javascript
+$('todolist.0.author','unknown')
+```
+
+Show comma-joined tags
+
+```javascript
+$('todolist.0.tags', v-> v ? v.join(','):'unknow')
+```
+
+case 2: two-way binding
+
+`TODO`
+
+
+## How it works
+
+But how it works , what is working on the backend. Let's show more example to explain it.
+
+First,  import the `react-redux-data-binding`
 
 ```javascript
 import F from 'react-redux-data-binding';
@@ -133,64 +220,4 @@ let immutableData = fromJS(data);
 
 F.of(immutableData).at('1.fats.total').map(v -> v+1).value();//4
 
-```
-
-# `react-redux-data-binding` helper
-
-As the prev chapter showed, the `react-redux-data-binding` can access the complex data structure (like tree) in a simply way.
-But it still more coding press if we use it in the JSX , specially the render function of Component.
-So we provide multi helpers to simplify this .
-
-Here is the example
-
-
-case 1:
-
-before
-
-```
-//before
-const $ = h(this.props);
-```
-after
-
-```
-//after
-$('hello.world.size')
-$('hello.world.size', 'default value if null')
-$('hello.world.size', v => v);
-
-```
-
-case 2:
-
-before
-```
-```
-
-after
-```
-```
-
-
-
-case 3:
-
-before
-```
-```
-
-after
-```
-```
-
-
-case 4:
-
-before
-```
-```
-
-after
-```
 ```

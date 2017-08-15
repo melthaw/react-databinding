@@ -1,4 +1,3 @@
-import of from './of';
-import either from './either';
-
-export default {of, either}
+export Optional from './optional';
+export F from './f';
+export {oneWayBind,twoWayBind} from './bind';

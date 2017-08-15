@@ -1,8 +1,9 @@
 /* eslint-disable max-nested-callbacks */
 import React from 'react';
+import { fromJS } from 'immutable';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { oneWayBind, twoWayBind} from '../src';
+import { oneWayBind, twoWayBind} from '../../src/immutable';
 
 const data = [
 	{
@@ -33,25 +34,6 @@ class ReadonlyComponent extends React.Component {
 
 }
 
-class MutableComponent extends React.Component {
-
-	constructor(props, context) {
-		super(props, context);
-		let { user } = props;
-		this.state = {user};
-	}
-
-	render() {
-		let $$ = twoWayBind(this.state);
-		return (
-			<div>
-				<input type="text" {...$$('user.username')}/>
-				<input type="text" {...$$('user.password')}/>
-			</div>
-		);
-	}
-
-}
 
 describe("bind", () => {
 	describe("one way bind", () => {
