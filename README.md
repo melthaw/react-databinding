@@ -1,8 +1,8 @@
 # `react-redux-data-binding`
 
 
-As we know , the final miles of [React](https://github.com/facebook/react) is the UI part,
-two-way binding is general feature in [Angular](https://github.com/angular/angular) & [Vue.js](https://github.com/vuejs/vue) but not supported in React.
+As we know , the final mile of [React](https://github.com/facebook/react) is the UI part,
+two-way binding is general feature in [Angular](https://github.com/angular/angular) & [Vue.js](https://github.com/vuejs/vue) but not supported in  [React](https://github.com/facebook/react).
 So we have to write down much code to handle the technical problem not focus on the business,
  `react-redux-data-binding` is used to make it easier.
 
@@ -69,7 +69,7 @@ class ImmutableComponent extends React.Component {
 Nothing special, just one more line to create a curried `$` function which will do the left work in the JSX part.
 
 As you see, it's quite simple to do one-way binding ,
-the magic is `$` function , it accept the path (**'data.title'**) and evaluate based on the Component's props.
+the magic is `$` function , it accept the path (`'data.title'`) and evaluate based on the Component's props.
 
 One more thing, the `$` function can accept a default value or a lambda callback
 which will be very useful if you want to handle the null eval result.
@@ -89,10 +89,10 @@ Show `'unknown'` if the author not defined in todo
 $('todolist.0.author','unknown')
 ```
 
-Show **comma-joined** tags
+Show comma-joined tags
 
 ```javascript
-$('todolist.0.tags', v => v ? v.join(','):'unknow')
+$('todolist.0.tags', v => v ? v.join(','):'unknown')
 ```
 
 As you see, complex path is supported, the array index is taken as the key of object , please feel free to try it out.
@@ -170,13 +170,11 @@ if (item != null) {
 after
 
 ```javascript
-import F,{Optional} from 'react-redux-data-binding';
-
-(new Optional(data)).at('1.fats.total').value();//3
-
-//or
+import {F, Optional} from 'react-redux-data-binding';
 
 F.of(data).at('1.fats.total').value();//3
+//or
+(new Optional(data)).at('1.fats.total').value();//3
 
 ```
 
@@ -203,14 +201,11 @@ if (item != null) {
 after
 
 ```javascript
-import F,{Optional} from 'react-redux-data-binding';
-
-(new Optional(data)).at('1.fats.total').map(v -> v+1).value();//4
-
-//or
+import {F,Optional} from 'react-redux-data-binding';
 
 F.of(data).at('1.fats.total').map(v -> v+1).value();//4
-
+//or
+(new Optional(data)).at('1.fats.total').map(v -> v+1).value();//4
 ```
 
 ## immutable
@@ -219,14 +214,14 @@ Yes , immutable is supported as well.
 The APIs is designed exactly matched as previous, the different is import part.
 
 ```javascript
-import F from 'react-redux-data-binding/immutable';
+import {F} from 'react-redux-data-binding/immutable';
 ```
 
 And make sure the args you passed to F.of is an immutable object.
 
 ```javascript
 import { fromJS } from 'immutable';
-import F from 'react-redux-data-binding/immutable';
+import { F } from 'react-redux-data-binding/immutable';
 
 let immutableData = fromJS(data);
 
