@@ -2,27 +2,28 @@
 
 
 As we know , the final miles of React & Redux is the UI part, 
-two-way binding is general feature in Angular & Vue but not supplied in react.
+two-way binding is general feature in Angular & Vue but not supported in react.
 So we have to write down much code to handle the technical problem not focus on the business,
  `react-redux-data-binding` is used to make it easier.
 
-What we want to resolved listed as follow:
+## Goal
 
+* easy to understand and simple to use
+* two level design
+	* top level for render (one way & two way binding)
+	* bottom level for more occasions (good designed Functor)
 * functional programing style
-* easy to access the data by path expression
-* the two-way data binding 
-
+* the data can be evaluated by path expression
 
 ## Get started
 
-
-## install
+### install
 
 ```sh
 > npm install react-redux-data-binding --save
 ```
 
-# one-way & two-way binding
+### one-way & two-way binding
 
 There are many solutions to implement one-way or two-way binding in react world ,
 but we like more simple and less coding API if we use it in the render function.
