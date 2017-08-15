@@ -30,7 +30,7 @@ but we like more simple and less coding API if we use it in the `render()` funct
 
 Here we will show how to get the easiest to understand and simplest to use one-way and two-way data binding in React Component.
 
-case 1: one-way binding
+###### case 1: one-way binding
 
 First, let's prepare the container Component to create a component and pass something as props to it.
 
@@ -98,9 +98,23 @@ $('todolist.0.tags', v => v ? v.join(','):'unknow')
 As you see, complex path is supported, the array index is taken as the key of object , please feel free to try it out.
 
 
-case 2: two-way binding
+###### case 2: two-way binding
 
 `TODO`
+
+### immutable-js
+
+Of course, the important [immutable-js](https://github.com/facebook/immutable-js) is supported.
+
+We try to keep the general API and immutable supported API in the same , the only different is the import part.
+
+```javascript
+//general
+import {oneWayBind,twoWayBind} from 'react-redux-data-binding';
+
+//immutable
+import {oneWayBind,twoWayBind} from 'react-redux-data-binding/immutable';
+```
 
 
 ## How it works
