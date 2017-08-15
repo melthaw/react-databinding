@@ -1,8 +1,8 @@
 # `react-redux-data-binding`
 
 
-As we know , the final miles of React & Redux is the UI part, 
-two-way binding is general feature in Angular & Vue but not supported in React.
+As we know , the final miles of [React](https://github.com/facebook/react) is the UI part,
+two-way binding is general feature in [Angular](https://github.com/angular/angular) & [Vue.js](https://github.com/vuejs/vue) but not supported in React.
 So we have to write down much code to handle the technical problem not focus on the business,
  `react-redux-data-binding` is used to make it easier.
 
