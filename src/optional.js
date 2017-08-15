@@ -47,10 +47,17 @@ Optional.prototype.peek = function (lambda) {
 /**
  * get the value of functor, if the value is null and the default value is supplied, it will return the default value as result
  *
- * @param dv default value
+ * if the defaultValue is instanceof function , whatever the value is null or not , call the function and return the result.
+ *
+ *
+ * @param dv default value (should be a plain value or a function)
  * @returns {any}
  */
 Optional.prototype.value = function (dv) {
+	if (dv != null && typeof dv === 'function') {
+		return dv(this.v);
+	}
+
 	return this.v == null ? dv : this.v;
 }
 

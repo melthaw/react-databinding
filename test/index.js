@@ -50,4 +50,14 @@ describe("optional", () => {
 			expect(totalFats).to.equal(3);
 		})
 	});
+	describe("default", () => {
+		it("default value", ()=> {
+			let totalFats = F.of(data).at('1.fats.notexisted').value('zero');
+			expect(totalFats).to.equal('zero');
+		})
+		it("default func", ()=> {
+			let totalFats = F.of(data).at('1.fats.notexisted').value(v => 'two');
+			expect(totalFats).to.equal('two');
+		})
+	});
 });

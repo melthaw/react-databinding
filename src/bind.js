@@ -5,7 +5,7 @@ import F from './f';
  *
  * @param path
  */
-const buildUpdater = (path) => (value) => {
+const buildChangedRequest = (path) => (value) => {
 	if (path == null || path.trim() === '') {
 		return {};
 	}
@@ -28,20 +28,36 @@ const buildUpdater = (path) => (value) => {
  * @param ctx this ref of current component
  */
 const doChange = (ctx) => (path) => (value)=> {
-	ctx.setState(buildUpdater(path, value));
+	ctx.setState(buildChangedRequest(path, value));
+}
+
+/**
+ * Usage:
+ *
+ * <code>
+ *      import {oneWayBind} from 'react-redux-data-binding';
+ *      let $ = oneWayBind(this.props);
+ *      <MyComponent $("username") />
+ * </code>
+ *
+ *
+ * @param context
+ */
+export const oneWayBind = (context) => (path, defaultValue) => {
+	return F.of(context).at(path).value(defaultValue);
 }
 
 /**
  * Usage :
  * <code>
- * import {twoWayBind} from 'react-redux-data-binding';
- * let bindTo = twoWayBind(this);
- * <MyComponent ...bindTo("username") />
+ * 	import {twoWayBind} from 'react-redux-data-binding';
+ * 	let $$ = twoWayBind(this);
+ * 	<MyComponent ...$$("username") />
  * </code>
  *
  * @param context
  */
-export default (context) => (path, defaultValue) => {
+export const twoWayBind = (context) => (path, defaultValue) => {
 	return {
 		value: F.of(context.state).at(path).value(defaultValue),
 		onChangeText: (v) => doChange(context, path, v),

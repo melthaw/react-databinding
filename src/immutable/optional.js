@@ -46,6 +46,10 @@ Optional.prototype.peek = function (lambda) {
  * @returns {any}
  */
 Optional.prototype.value = function (dv) {
+	if (dv != null && typeof dv === 'function') {
+		return dv(this.v);
+	}
+
 	return this.v == null ? dv : this.v;
 }
 

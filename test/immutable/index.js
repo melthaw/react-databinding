@@ -37,7 +37,7 @@ describe("immutable optional", () => {
 			expect(totalFats).to.equal(undefined);
 		})
 		it("unexisted path2", ()=> {
-			let totalFats = F.of(data).at('0.fats.minerals.unexisted').value();
+			let totalFats = F.of(data).at('0.fats.minerals.notexisted').value();
 			expect(totalFats).to.equal(undefined);
 		})
 	});
@@ -49,6 +49,16 @@ describe("immutable optional", () => {
 		it("with default", ()=> {
 			let totalFats = F.either(data, null).at('1.fats.total').value();
 			expect(totalFats).to.equal(3);
+		})
+	});
+	describe("default", () => {
+		it("default value", ()=> {
+			let totalFats = F.of(data).at('1.fats.notexisted').value('zero');
+			expect(totalFats).to.equal('zero');
+		})
+		it("default func", ()=> {
+			let totalFats = F.of(data).at('1.fats.notexisted').value(v => 'two');
+			expect(totalFats).to.equal('two');
 		})
 	});
 });
