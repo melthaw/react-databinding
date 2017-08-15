@@ -2,7 +2,7 @@
 
 
 As we know , the final miles of React & Redux is the UI part, 
-two-way binding is general feature in Angular & Vue but not supported in react.
+two-way binding is general feature in Angular & Vue but not supported in React.
 So we have to write down much code to handle the technical problem not focus on the business,
  `react-redux-data-binding` is used to make it easier.
 
@@ -25,10 +25,10 @@ So we have to write down much code to handle the technical problem not focus on 
 
 ### one-way & two-way binding
 
-There are many solutions to implement one-way or two-way binding in react world ,
+There are many solutions to implement one-way or two-way binding in React world ,
 but we like more simple and less coding API if we use it in the render function.
 
-Here we will show how to get the easiest to understand and simplest to use one-way and two-way data binding in react Component.
+Here we will show how to get the easiest to understand and simplest to use one-way and two-way data binding in React Component.
 
 case 1: one-way binding
 
@@ -40,7 +40,7 @@ const data = {
 	body:'blablablabla...'
 }
 
-const case1 = () => (
+const ContainerComponent = () => (
 	<ImmutableComponent data={data}/>
 )
 
