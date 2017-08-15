@@ -70,12 +70,6 @@ Nothing special, just one more line to create a curried $ function which will do
 As you see, it's quite simple to do one-way binding ,
 the magic is $ function , it accept the path ('data.title') and evaluate based on the Component's props.
 
-More complex path is supported, the array index is taken as the key of object , please feel free to try it out.
-
-For example:
-* todo.author.name
-* todo.tags.0
-
 One more thing, the $ function can accept a default value or a lambda callback
 which will be very useful if you want to handle the null eval result.
 
@@ -97,8 +91,11 @@ $('todolist.0.author','unknown')
 Show comma-joined tags
 
 ```javascript
-$('todolist.0.tags', v-> v ? v.join(','):'unknow')
+$('todolist.0.tags', v => v ? v.join(','):'unknow')
 ```
+
+As you see, complex path is supported, the array index is taken as the key of object , please feel free to try it out.
+
 
 case 2: two-way binding
 
