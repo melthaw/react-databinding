@@ -8,12 +8,11 @@ So we have to write down much code to handle the technical problem not focus on 
 
 ## Goal
 
-* easy to understand and simple to use
-* two level design
-	* top level for render (one way & two way binding)
-	* bottom level for more occasions (good designed Functor)
-* functional programing style
-* the data can be evaluated by path expression
+* Easy to understand and simple to use
+* Two level designed APIs
+	* Top level for Component#render() (one-way & two-way binding)
+	* Lower level for functional programming ( Functor & Monad )
+* The data can be evaluated by path expression
 
 ## Get started
 
