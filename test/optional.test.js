@@ -31,10 +31,9 @@ describe("optional", () => {
 			let totalFats = F.of(data).at('1.fats.total').map(v => v + 1).value();
 			expect(totalFats).to.be.equal(4);
 		})
-		it("",()=> {
+		it("deep value",()=> {
 			let fats = F.of(data).at('1.fats').value();
 			expect(fats).to.be.deep.equal({total: 3});
-
 		})
 		it("unexisted path1", ()=> {
 			let totalFats = F.of(data).at('3.fats.total').value();

@@ -1,7 +1,8 @@
 /* eslint-disable max-nested-callbacks */
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
+import { shallow,mount } from 'enzyme';
+import sinon from 'sinon';
 import { oneWayBind, twoWayBind} from '../src';
 
 const data = [
@@ -42,11 +43,11 @@ class MutableComponent extends React.Component {
 	}
 
 	render() {
-		let $$ = twoWayBind(this.state);
+		let $$ = twoWayBind(this);
 		return (
 			<div>
-				<input type="text" {...$$('user.username')}/>
-				<input type="text" {...$$('user.password')}/>
+				<input id="username" type="text" {...$$('user.username')}/>
+				<input id="password" type="password" {...$$('user.password')}/>
 			</div>
 		);
 	}
@@ -55,11 +56,25 @@ class MutableComponent extends React.Component {
 
 describe("bind", () => {
 	describe("one way bind", () => {
-		const testComp = shallow(<ReadonlyComponent data={data} title="hello world"/>);
-		expect(testComp.find('h1').text()).to.be.equal('hello world');
-		expect(testComp.find('span').text()).to.be.equal('3');
+		const wrapper = shallow(<ReadonlyComponent data={data} title="hello world"/>);
+		expect(wrapper.find('h1').text()).to.be.equal('hello world');
+		expect(wrapper.find('span').text()).to.be.equal('3');
 	})
 	describe("two way bind", () => {
+		let user = {username: 'react-data-bind', password: 'awesome'};
+		const wrapper = shallow(<MutableComponent user={user}/>);
 
+		wrapper.find('#username').simulate('change', 'react-data-binding');
+		expect(wrapper.state().user.username).to.be.equal('react-data-binding');
+		expect(wrapper.find('#username').node.props.value).to.be.equal('react-data-binding');
+		expect(wrapper.state().user.password).to.be.equal('awesome');
+		expect(wrapper.find('#password').node.props.value).to.be.equal('awesome');
+
+		wrapper.find('#password').simulate('change', 'amazing');
+		expect(wrapper.state().user.username).to.be.equal('react-data-binding');
+		expect(wrapper.find('#username').node.props.value).to.be.equal('react-data-binding');
+		expect(wrapper.state().user.password).to.be.equal('amazing');
+		expect(wrapper.find('#password').node.props.value).to.be.equal('amazing');
 	})
 })
+

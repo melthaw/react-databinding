@@ -22,7 +22,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "lint": "eslint ./src ./tests",
-    "test": "mocha --compilers js:babel-register './test/**/*.js'",
+    "test": "mocha --compilers js:babel-register './test/**/*.js' --require ./test/setup.js",
     "build": "babel ./src --source-maps --out-dir ./dist",
     "precommit": "npm run lint && npm run test"
   },
@@ -71,5 +71,9 @@
     "react-test-renderer": "^15.6.1",
     "redux": "^3.0.0",
     "semantic-release": "^6.3.2"
+  },
+  "dependencies": {
+    "jsdom": "^11.1.0",
+    "sinon": "^3.2.0"
   }
 }

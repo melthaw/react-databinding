@@ -1,27 +1,21 @@
-import F from './f';
+import F from '../f';
 
 /**
  * Build the arg of this.setState() for current component
  *
  * @param path
  */
-const buildChangedRequest = (host) => (path) => (value) => {
+const buildChangedRequest = (path) => (value) => {
 	if (path == null || path.trim() === '') {
-		return host;
+		return {};
 	}
 
-	let result = host;
+	let result = {};
 	let temp = result;
 	let stack = path.split('.');
 
 	while (stack.length > 1) {
-		let nextProp = stack.shift();
-		if (temp[nextProp] == null) {
-			temp = temp[nextProp] = {};
-		}
-		else {
-			temp = temp[nextProp];
-		}
+		temp[stack.shift()] = {};
 	}
 
 	temp[stack.shift()] = value;
@@ -34,8 +28,7 @@ const buildChangedRequest = (host) => (path) => (value) => {
  * @param ctx this ref of current component
  */
 const doChange = (ctx) => (path) => (value)=> {
-	//console.log(buildChangedRequest(ctx.state)(path)(value));
-	ctx.setState(buildChangedRequest(ctx.state)(path)(value));
+	ctx.setState(buildChangedRequest(path, value));
 }
 
 /**
@@ -57,9 +50,9 @@ export const oneWayBind = (context) => (path, defaultValue) => {
 /**
  * Usage :
  * <code>
- *    import {twoWayBind} from 'react-redux-data-binding';
- *    let $$ = twoWayBind(this);
- *    <MyComponent ...$$("username") />
+ * 	import {twoWayBind} from 'react-redux-data-binding';
+ * 	let $$ = twoWayBind(this);
+ * 	<MyComponent ...$$("username") />
  * </code>
  *
  * @param context
@@ -67,6 +60,7 @@ export const oneWayBind = (context) => (path, defaultValue) => {
 export const twoWayBind = (context) => (path, defaultValue) => {
 	return {
 		value: F.of(context.state).at(path).value(defaultValue),
-		onChange: doChange(context)(path),
+		onChangeText: (v) => doChange(context, path, v),
+		onValueChange: (v) => doChange(context, path, v)
 	}
 }

@@ -1,7 +1,7 @@
 /* eslint-disable max-nested-callbacks */
 import { expect } from 'chai';
 import { fromJS } from 'immutable';
-import F from '../../src/immutable';
+import { F } from '../../src/immutable';
 
 const data = fromJS([
 	{
