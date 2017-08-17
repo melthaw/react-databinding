@@ -99,7 +99,51 @@ As you see, complex path is supported, the array index is taken as the key of ob
 
 ###### case 2: two-way binding
 
-`TODO`
+The two-way binding is a bit different but similar. Here we use `$$` to indicate it's a two-way binding.
+
+First, let's prepare the container Component to create a component and pass something as props to it.
+
+```javascript
+const data = {
+	username:'react-data-binding',
+	nickname:'two-way binding'
+}
+
+const ContainerComponent = () => (
+	<MutableComponent user={data}/>
+)
+
+```
+
+Then goes to the `MutableComponent` which we will show the two-way binding.
+
+
+```javascript
+
+class MutableComponent extends React.Component {
+
+	constructor(props, context) {
+		super(props, context);
+		let { user } = props;
+		this.state = {user};
+	}
+
+	render() {
+		let $$ = twoWayBind(this);
+		return (
+			<div>
+				<input id="username" type="text" {...$$('user.username')}/>
+				<input id="nickname" type="text" {...$$('user.password')}/>
+			</div>
+		);
+	}
+
+}
+
+```
+
+In the `render()` function , the `$$` returns a composed object, so we use the `...` to expand as the input's props.
+
 
 ### immutable-js
 
