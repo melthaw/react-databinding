@@ -1,34 +1,27 @@
 import F from './f';
-
-/**
- * Build the arg of this.setState() for current component
- *
- * @param path
- */
-const buildChangedRequest = (path) => (value) => {
-	if (path == null || path.trim() === '') {
-		return {};
-	}
-
-	let result = {};
-	let temp = result;
-	let stack = path.split('.');
-
-	while (stack.length > 1) {
-		temp[stack.shift()] = {};
-	}
-
-	temp[stack.shift()] = value;
-
-	return result;
-}
+import { fromJS } from 'immutable';
 
 /**
  *
  * @param ctx this ref of current component
  */
 const doChange = (ctx) => (path) => (value)=> {
-	ctx.setState(buildChangedRequest(path, value));
+	if (path == null || path.trim() === '') {
+		return;
+	}
+
+	let propChain = path.split('.');
+	let firstProp = propChain[0];
+	if (propChain.length === 1) {
+		let next = {};
+		next[firstProp] = value;
+		ctx.setState(next);
+		return;
+	}
+
+	let next = {};
+	next[firstProp] = ctx.state[firstProp].setIn(propChain.slice(1), value);
+	ctx.setState(next);
 }
 
 /**
@@ -44,23 +37,22 @@ const doChange = (ctx) => (path) => (value)=> {
  * @param context
  */
 export const oneWayBind = (context) => (path, defaultValue) => {
-	return F.of(context).at(path).value(defaultValue);
+	return F.of(fromJS(context)).at(path).value(defaultValue);
 }
 
 /**
  * Usage :
  * <code>
- * 	import {twoWayBind} from 'react-redux-data-binding';
- * 	let $$ = twoWayBind(this);
- * 	<MyComponent ...$$("username") />
+ *    import {twoWayBind} from 'react-redux-data-binding';
+ *    let $$ = twoWayBind(this);
+ *    <MyComponent ...$$("username") />
  * </code>
  *
  * @param context
  */
 export const twoWayBind = (context) => (path, defaultValue) => {
 	return {
-		value: F.of(context.state).at(path).value(defaultValue),
-		onChangeText: (v) => doChange(context, path, v),
-		onValueChange: (v) => doChange(context, path, v)
+		value: F.of(fromJS(context.state)).at(path).value(defaultValue),
+		onChange: doChange(context)(path),
 	}
 }

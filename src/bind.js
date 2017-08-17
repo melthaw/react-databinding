@@ -1,32 +1,23 @@
 import F from './f';
 
 /**
- * Build the arg of this.setState() for current component
  *
- * @param path
+ * @param target
  */
-const buildChangedRequest = (host) => (path) => (value) => {
-	if (path == null || path.trim() === '') {
-		return host;
-	}
+const buildChangedRequest = (target, pathStack, value) => {
+	let temp = target;
 
-	let result = host;
-	let temp = result;
-	let stack = path.split('.');
-
-	while (stack.length > 1) {
-		let nextProp = stack.shift();
+	while (pathStack.length > 1) {
+		let nextProp = pathStack.shift();
 		if (temp[nextProp] == null) {
-			temp = temp[nextProp] = {};
+			temp[nextProp] = {};
 		}
-		else {
-			temp = temp[nextProp];
-		}
+		temp = temp[nextProp];
 	}
 
-	temp[stack.shift()] = value;
+	temp[pathStack.shift()] = value;
 
-	return result;
+	return target;
 }
 
 /**
@@ -34,8 +25,22 @@ const buildChangedRequest = (host) => (path) => (value) => {
  * @param ctx this ref of current component
  */
 const doChange = (ctx) => (path) => (value)=> {
-	//console.log(buildChangedRequest(ctx.state)(path)(value));
-	ctx.setState(buildChangedRequest(ctx.state)(path)(value));
+	if (path == null || path.trim() === '') {
+		return;
+	}
+
+	let propChain = path.split('.');
+	let firstProp = propChain[0];
+	if (propChain.length === 1) {
+		let next = {};
+		next[firstProp] = value;
+		ctx.setState(next);
+		return;
+	}
+
+	let next = {};
+	next[firstProp] = buildChangedRequest(ctx.state[firstProp], propChain.slice(1), value);
+	ctx.setState(next);
 }
 
 /**
