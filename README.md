@@ -1,10 +1,10 @@
-# `react-redux-data-binding`
+# `react-data-binding`
 
 
 As we know , the final mile of [React](https://github.com/facebook/react) is the UI part,
 two-way binding is general feature in [Angular](https://github.com/angular/angular) & [Vue.js](https://github.com/vuejs/vue) but not supported in  [React](https://github.com/facebook/react).
 So we have to write down much code to handle the technical problem not focus on the business,
- `react-redux-data-binding` is used to make it easier.
+ `react-data-binding` is used to make it easier.
 
 ## Goal
 
@@ -19,7 +19,7 @@ So we have to write down much code to handle the technical problem not focus on 
 ### install
 
 ```sh
-> npm install react-redux-data-binding --save
+> npm install react-data-binding --save
 ```
 
 ### one-way & two-way binding
@@ -49,7 +49,7 @@ Then goes to the `ImmutableComponent` which we will show the one-way binding
 
 ```javascript
 import {React} from 'react';
-import {oneWayBind} from 'react-redux-data-binding';
+import {oneWayBind} from 'react-data-binding';
 
 class ImmutableComponent extends React.Component {
 
@@ -153,10 +153,10 @@ We try to keep the general API and immutable supported API in the same , the onl
 
 ```javascript
 //general
-import {oneWayBind,twoWayBind} from 'react-redux-data-binding';
+import {oneWayBind,twoWayBind} from 'react-data-binding';
 
 //immutable
-import {oneWayBind,twoWayBind} from 'react-redux-data-binding/immutable';
+import {oneWayBind,twoWayBind} from 'react-data-binding/immutable';
 ```
 
 
@@ -164,10 +164,10 @@ import {oneWayBind,twoWayBind} from 'react-redux-data-binding/immutable';
 
 But how it works , what is working on the backend. Let's show more example to explain it.
 
-First,  import the `react-redux-data-binding`
+First,  import the `react-data-binding`
 
 ```javascript
-import F from 'react-redux-data-binding';
+import F from 'react-data-binding';
 ```
 
 Now let's prepare the data to show the usage
@@ -213,7 +213,7 @@ if (item != null) {
 after
 
 ```javascript
-import {F, Optional} from 'react-redux-data-binding';
+import {F, Optional} from 'react-data-binding';
 
 F.of(data).at('1.fats.total').value();//3
 //or
@@ -244,7 +244,7 @@ if (item != null) {
 after
 
 ```javascript
-import {F,Optional} from 'react-redux-data-binding';
+import {F,Optional} from 'react-data-binding';
 
 F.of(data).at('1.fats.total').map(v -> v+1).value();//4
 //or
@@ -257,14 +257,14 @@ Yes , immutable is supported as well.
 The APIs is designed exactly matched as previous, the different is import part.
 
 ```javascript
-import {F} from 'react-redux-data-binding/immutable';
+import {F} from 'react-data-binding/immutable';
 ```
 
 And make sure the args you passed to F.of is an immutable object.
 
 ```javascript
 import { fromJS } from 'immutable';
-import { F } from 'react-redux-data-binding/immutable';
+import { F } from 'react-data-binding/immutable';
 
 let immutableData = fromJS(data);
 
