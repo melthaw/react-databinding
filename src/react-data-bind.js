@@ -75,6 +75,7 @@ export const twoWayBind = (context, onChange) => (path, defaultValue) => {
 		onChange: value => {
 			if (onChange != null) {
 				onChange({path, value});
+				return;
 			}
 			doChange(context, path)(value)
 		},
