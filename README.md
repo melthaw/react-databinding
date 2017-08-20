@@ -62,7 +62,7 @@ import {oneWayBind, twoWayBind} from 'react-databinding/react-decorator';
 //with decorator
 class SampleComponent extends React.Component {
 
-	@oneWaybind()
+	@oneWayBind()
 	render($) {
 		return (<div>
 			<h1>{$('data.title')}</h1>
