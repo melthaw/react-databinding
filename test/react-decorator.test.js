@@ -3,7 +3,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow,mount } from 'enzyme';
 import sinon from 'sinon';
-import { oneWayBind, twoWayBind} from '../src';
+import { oneWayBind, twoWayBind} from '../src/react-decorator';
 
 const data = [
 	{
@@ -24,11 +24,10 @@ const data = [
 	}
 ];
 
-
 class ReadonlyComponent extends React.Component {
 
-	render() {
-		let $ = oneWayBind(this.props);
+	@oneWayBind()
+	render($) {
 		return (<div><h1>{$('title')}</h1><span>{$('data.1.fats.total')}</span></div>);
 	}
 
@@ -42,8 +41,8 @@ class MutableComponent extends React.Component {
 		this.state = {user};
 	}
 
-	render() {
-		let $$ = twoWayBind(this);
+	@twoWayBind('value','onChange')
+	render($$) {
 		return (
 			<div>
 				<input id="username" type="text" {...$$('user.username')}/>
@@ -54,7 +53,7 @@ class MutableComponent extends React.Component {
 
 }
 
-describe("bind by manual", () => {
+describe("bind by decorator", () => {
 	it("one way bind", () => {
 		const wrapper = shallow(<ReadonlyComponent data={data} title="hello world"/>);
 		expect(wrapper.find('h1').text()).to.be.equal('hello world');

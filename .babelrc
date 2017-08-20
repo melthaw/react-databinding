@@ -4,13 +4,15 @@
       "plugins": [
         "flow-runtime",
         "syntax-flow",
-        "transform-flow-strip-types"
+        "transform-flow-strip-types",
+        "transform-decorators-legacy"
       ]
     },
     "production": {
       "plugins": [
         "syntax-flow",
-        "transform-flow-strip-types"
+        "transform-flow-strip-types",
+        "transform-decorators-legacy"
       ]
     }
   },

@@ -6,7 +6,7 @@ import { shallow,mount } from 'enzyme';
 import sinon from 'sinon';
 import { oneWayBind, twoWayBind} from '../../src/immutable';
 
-const data = [
+const data = fromJS([
 	{
 		calories: {total: 0, fat: 0},
 		vitamins: {a: {total: 0, retinol: 0}, b6: 0, c: 0},
@@ -23,8 +23,7 @@ const data = [
 		vitamins: {a: {total: 120, retinol: 10}, b6: 0, c: 200},
 		minerals: {calcium: 20}
 	}
-];
-
+]);
 
 class ReadonlyComponent extends React.Component {
 
@@ -55,14 +54,14 @@ class MutableComponent extends React.Component {
 
 }
 
-describe("bind", () => {
-	describe("one way bind", () => {
+describe("immutable bind by manual", () => {
+	it("one way bind", () => {
 		const wrapper = shallow(<ReadonlyComponent data={data} title="hello world"/>);
 		expect(wrapper.find('h1').text()).to.be.equal('hello world');
 		expect(wrapper.find('span').text()).to.be.equal('3');
 	})
-	describe("two way bind", () => {
-		let user = {username: 'react-data-bind', password: 'awesome'};
+	it("two way bind", () => {
+		let user = fromJS({username: 'react-data-bind', password: 'awesome'});
 		const wrapper = shallow(<MutableComponent user={user}/>);
 
 		wrapper.find('#username').simulate('change', 'react-data-binding');

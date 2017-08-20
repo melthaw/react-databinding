@@ -27,18 +27,60 @@ So we have to write down much code to handle the technical issue not focus on th
 > npm install react-databinding --save
 ```
 
+### by manual vs. decorator
+
+There are two styles to do data binding in `react-databinding`.
+
+ style | import
+---|---
+ by manual | import {oneWayBind, twoWayBind} from 'react-databinding/react-data-bind'
+ with decorator | import {oneWayBind, twoWayBind} from 'react-databinding/react-decorator'
+
+Here we show the different between the two styles of data binding ,
+we choose one-way binding for example , the two-way binding is similar .
+
+
+```js
+import {oneWayBind, twoWayBind} from 'react-databinding/react-data-bind';
+
+//by manual
+class SampleComponent extends React.Component {
+
+	render() {
+		let $ = oneWayBind(this.props);
+		return (<div>
+			<h1>{$('data.title')}</h1>
+		</div>)
+	}
+
+}
+```
+
+```js
+import {oneWayBind, twoWayBind} from 'react-databinding/react-decorator';
+
+//with decorator
+class SampleComponent extends React.Component {
+
+	@oneWaybind()
+	render($) {
+		return (<div>
+			<h1>{$('data.title')}</h1>
+		</div>)
+	}
+
+}
+```
+
+If you choose the style of decorator, remember pass the binding operation (`$` in our example) to the render function.
+
+
 ### one-way & two-way binding
 
 There are many solutions to implement one-way or two-way binding in React world ,
 but we like more simple and less coding API if we use it in the `render()` function.
 
 Here we will show how to get the easiest to understand and simplest to use one-way and two-way data binding in React Component.
-
-
-#### before start
-
-`TODO`
-
 
 
 ###### case 1: one-way binding
@@ -58,6 +100,7 @@ const ContainerComponent = () => (
 ```
 
 Then goes to the `ImmutableComponent` which we will show the one-way binding
+
 
 ```javascript
 import {React} from 'react';
@@ -158,7 +201,6 @@ In the `render()` function , the `$$` returns a composed object, so we use the `
 
 
 
-
 ### immutable-js
 
 Of course, the important [immutable-js](https://github.com/facebook/immutable-js) is supported.
@@ -171,6 +213,10 @@ import {oneWayBind,twoWayBind} from 'react-databinding';
 
 //immutable
 import {oneWayBind,twoWayBind} from 'react-databinding/immutable';
+
+//decorator
+import {oneWayBind,twoWayBind} from 'react-databinding/immutable/react-decorator';
+
 ```
 
 
