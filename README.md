@@ -1,10 +1,10 @@
-# `react-data-binding`
+# `react-databinding`
 
 
 As we know , the final mile of [React](https://github.com/facebook/react) is the UI part,
 two-way binding is general feature in [Angular](https://github.com/angular/angular) & [Vue.js](https://github.com/vuejs/vue) but not supported in  [React](https://github.com/facebook/react).
 So we have to write down much code to handle the technical problem not focus on the business,
- `react-data-binding` is used to make it easier.
+ `react-databinding` is used to make it easier.
 
 ## Goal
 
@@ -12,14 +12,15 @@ So we have to write down much code to handle the technical problem not focus on 
 * Two level designed APIs
 	* Top level for Component#render() (one-way & two-way binding)
 	* Lower level for functional programming ( Functor & Monad )
-* The data can be evaluated by path expression
+* The value can be evaluated by path expression
+* Easy to customize the behaviour if the target component is changed
 
 ## Get started
 
 ### install
 
 ```sh
-> npm install react-data-binding --save
+> npm install react-databinding --save
 ```
 
 ### one-way & two-way binding
@@ -49,7 +50,7 @@ Then goes to the `ImmutableComponent` which we will show the one-way binding
 
 ```javascript
 import {React} from 'react';
-import {oneWayBind} from 'react-data-binding';
+import {oneWayBind} from 'react-databinding';
 
 class ImmutableComponent extends React.Component {
 
@@ -105,7 +106,7 @@ First, let's prepare the container Component to create a component and pass some
 
 ```javascript
 const data = {
-	username:'react-data-binding',
+	username:'react-databinding',
 	nickname:'two-way binding'
 }
 
@@ -153,10 +154,10 @@ We try to keep the general API and immutable supported API in the same , the onl
 
 ```javascript
 //general
-import {oneWayBind,twoWayBind} from 'react-data-binding';
+import {oneWayBind,twoWayBind} from 'react-databinding';
 
 //immutable
-import {oneWayBind,twoWayBind} from 'react-data-binding/immutable';
+import {oneWayBind,twoWayBind} from 'react-databinding/immutable';
 ```
 
 
@@ -164,10 +165,10 @@ import {oneWayBind,twoWayBind} from 'react-data-binding/immutable';
 
 But how it works , what is working on the backend. Let's show more example to explain it.
 
-First,  import the `react-data-binding`
+First,  import the `react-databinding`
 
 ```javascript
-import F from 'react-data-binding';
+import { F } from 'react-databinding';
 ```
 
 Now let's prepare the data to show the usage
@@ -213,7 +214,7 @@ if (item != null) {
 after
 
 ```javascript
-import {F, Optional} from 'react-data-binding';
+import {F, Optional} from 'react-databinding';
 
 F.of(data).at('1.fats.total').value();//3
 //or
@@ -244,7 +245,7 @@ if (item != null) {
 after
 
 ```javascript
-import {F,Optional} from 'react-data-binding';
+import {F,Optional} from 'react-databinding';
 
 F.of(data).at('1.fats.total').map(v -> v+1).value();//4
 //or
@@ -257,14 +258,14 @@ Yes , immutable is supported as well.
 The APIs is designed exactly matched as previous, the different is import part.
 
 ```javascript
-import {F} from 'react-data-binding/immutable';
+import {F} from 'react-databinding/immutable';
 ```
 
 And make sure the args you passed to F.of is an immutable object.
 
 ```javascript
 import { fromJS } from 'immutable';
-import { F } from 'react-data-binding/immutable';
+import { F } from 'react-databinding/immutable';
 
 let immutableData = fromJS(data);
 

@@ -50,15 +50,15 @@ export const oneWayBind = (context) => (path, defaultValue) => {
  *
  * @param context
  */
-export const twoWayBind = (value, event) => (context, onChange) => (path, defaultValue) => {
+export const twoWayBind = (value, ...event) => (context, onChange) => (path, defaultValue) => {
 	let result = {};
 	result[value] = F.of(fromJS(context.state)).at(path).value(defaultValue);
-	result[event] = value => {
+	event.forEach(e => result[event] = value => {
 		if (onChange != null) {
 			onChange({path, value});
 			return;
 		}
 		doChange(context, path)(value)
-	};
+	});
 	return result;
 }
