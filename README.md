@@ -4,9 +4,10 @@
 [![NPM version](http://img.shields.io/npm/v/react-databinding.svg?style=flat-square)](https://www.npmjs.org/package/react-databinding)
 
 
-As we know , the final mile of [React](https://github.com/facebook/react) is the UI part,
-two-way binding is general feature in [Angular](https://github.com/angular/angular) & [Vue.js](https://github.com/vuejs/vue) but not supported in  [React](https://github.com/facebook/react).
-So we have to write down much code to handle the technical problem not focus on the business,
+As we know ,
+the two-way binding is general feature in [Angular](https://github.com/angular/angular) & [Vue.js](https://github.com/vuejs/vue)
+but not supported in  [React](https://github.com/facebook/react).
+So we have to write down much code to handle the technical issue not focus on the business,
  `react-databinding` is used to make it easier.
 
 ## Goal
@@ -32,6 +33,13 @@ There are many solutions to implement one-way or two-way binding in React world 
 but we like more simple and less coding API if we use it in the `render()` function.
 
 Here we will show how to get the easiest to understand and simplest to use one-way and two-way data binding in React Component.
+
+
+#### before start
+
+`TODO`
+
+
 
 ###### case 1: one-way binding
 
@@ -147,6 +155,8 @@ class MutableComponent extends React.Component {
 ```
 
 In the `render()` function , the `$$` returns a composed object, so we use the `...` to expand as the input's props.
+
+
 
 
 ### immutable-js
