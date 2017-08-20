@@ -1,5 +1,8 @@
 # `react-databinding`
 
+[![Travis build status](http://img.shields.io/travis/melthaw/react-databinding/master.svg?style=flat-square)](https://travis-ci.org/melthaw/react-databinding)
+[![NPM version](http://img.shields.io/npm/v/react-databinding.svg?style=flat-square)](https://www.npmjs.org/package/react-databinding)
+
 
 As we know , the final mile of [React](https://github.com/facebook/react) is the UI part,
 two-way binding is general feature in [Angular](https://github.com/angular/angular) & [Vue.js](https://github.com/vuejs/vue) but not supported in  [React](https://github.com/facebook/react).
