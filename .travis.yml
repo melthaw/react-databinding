@@ -4,7 +4,7 @@ node_js:
   - 7
   - 6
 notifications:
-  email: false
+  webhooks: https://hook.bearychat.com/=bwBrp/travis/93d020f67c0a20049466b93a0211692c
 sudo: false
 script:
   - npm run test
