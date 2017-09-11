@@ -1,3 +1,12 @@
-export Optional from './optional';
-export F from './f';
-export {oneWayBind,twoWayBind} from './react-data-bind';
+import Optional from './optional';
+import F from './f';
+import {oneWayBind,twoWayBind} from './react-data-bind';
+
+export {
+	Optional,
+	F,
+	oneWayBind,
+	twoWayBind,
+}
+
+
