@@ -4,26 +4,29 @@
 [![NPM version](http://img.shields.io/npm/v/react-databinding.svg?style=flat-square)](https://www.npmjs.org/package/react-databinding)
 
 
-As we know ,
-the two-way binding is general feature in [Angular](https://github.com/angular/angular) & [Vue.js](https://github.com/vuejs/vue)
-but not supported in  [React](https://github.com/facebook/react).
-So we have to write down much code to handle the technical issue not focus on the business,
- `react-databinding` is used to make it easier.
+双向数据绑定是一个很常见的功能，[Angular](https://github.com/angular/angular) 和 [Vue.js](https://github.com/vuejs/vue) 都支持双向数据绑定。
+但是[React](https://github.com/facebook/react) 不支持双向数据绑定，为了解决数据绑定问题，不得不写大量的代码。
+我们提供`react-databinding` 就是为了让这个事情变得简单容易。
 
-[用户使用指南 - 中文版](./README.zh_CN.md)
+[User Guide - English](./README.md)
 
-## Goal
+## 设计目标
 
-* Easy to understand and simple to use
-* Two level designed APIs
-	* Top level for Component#render() (one-way & two-way binding)
-	* Lower level for functional programming ( Functor & Monad )
-* The value can be evaluated by path expression
-* Easy to customize the behaviour if the target component is changed
+* 很好理解
+* 简单易用
+* 提供两种级别的API
+	* 顶层API可以直接用于组件渲染Component#render() (支持单向和双向绑定)
+	* 底层API支持函数编程(支持Functor & Monad)
+* 基于路径表达式的方式访问值（支持任意层嵌套）
 
-## Get started
+## 快速上手
 
-### install
+> 假设使用者已经在自己的开发机上安装好`node.js`和`npm`
+> 建议使用者采用`nvm`来管理`node.js`的版本
+
+### 安装
+
+
 
 ```sh
 > npm install react-databinding --save
