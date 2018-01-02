@@ -17,7 +17,7 @@
 * 提供两种级别的API
 	* 顶层API可以直接用于组件渲染Component#render() (支持单向和双向绑定)
 	* 底层API支持函数编程(支持Functor & Monad)
-* 基于路径表达式的方式访问值（支持任意层嵌套）
+* 支持路径表达式求值（支持任意层嵌套）
 
 ## 快速上手
 
@@ -232,13 +232,13 @@ import {oneWayBind,twoWayBind} from 'react-databinding/immutable/react-decorator
 
 在这个章节我们将给大家介绍一下我们提供的数据绑定背后的工作原理。
 
-First,  import the `react-databinding`
+首先导入F对象：
 
 ```javascript
 import { F } from 'react-databinding';
 ```
 
-Now let's prepare the data to show the usage
+接下来我们准备一些数据：
 
 ```javascript
 const data = [
@@ -262,9 +262,9 @@ const data = [
 ```
 
 
-case 1: iterate the data and get the value
+示例1: 对数据进行多级求值
 
-before
+传统模式
 
 ```javascript
 
@@ -278,7 +278,7 @@ if (item != null) {
 
 ```
 
-after
+使用F对象
 
 ```javascript
 import {F, Optional} from 'react-databinding';
@@ -289,10 +289,9 @@ F.of(data).at('1.fats.total').value();//3
 
 ```
 
-case 2: convert the data
+示例2: 数据转换
 
-
-before
+传统模式
 
 ```javascript
 
@@ -309,7 +308,7 @@ if (item != null) {
 
 ```
 
-after
+使用F对象
 
 ```javascript
 import {F,Optional} from 'react-databinding';
@@ -319,16 +318,19 @@ F.of(data).at('1.fats.total').map(v -> v+1).value();//4
 (new Optional(data)).at('1.fats.total').map(v -> v+1).value();//4
 ```
 
+> 从以上代码对比可以看出，使用F对象对多层嵌套对象求值的代码量非常少，而且路径表达式对业务逻辑的呈现也非常清晰。
+
+
 ## immutable
 
-Yes , immutable is supported as well.
-The APIs is designed exactly matched as previous, the different is import part.
+正如我们前面所述，我们支持immutable对象，API完全一致，唯一不同的就是import部分。
+
 
 ```javascript
 import {F} from 'react-databinding/immutable';
 ```
 
-And make sure the args you passed to F.of is an immutable object.
+> 注意：传递给`F.of`的对象必须是immutable类型的对象
 
 ```javascript
 import { fromJS } from 'immutable';
