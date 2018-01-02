@@ -26,31 +26,28 @@
 
 ### 安装
 
-
-
 ```sh
 > npm install react-databinding --save
 ```
 
-### by manual vs. decorator
+### 编程式 vs. 声明式
 
-There are two styles to do data binding in `react-databinding`.
+`react-databinding`支持两种数据绑定风格。
 
- style | import
+ 风格 | 使用方式
 ---|---
- by manual | import {oneWayBind, twoWayBind} from 'react-databinding/react-data-bind'
- with decorator | import {oneWayBind, twoWayBind} from 'react-databinding/react-decorator'
+ 编程式 | import {oneWayBind, twoWayBind} from 'react-databinding/react-data-bind'
+ 声明式 | import {oneWayBind, twoWayBind} from 'react-databinding/react-decorator'
 
-Here we show the different between the two styles of data binding ,
-we choose one-way binding for example , the two-way binding is similar .
-
+接下来我们用示例来说明两种数据绑定方式的区别。
+由于单向绑定比双向绑定简单，为了方便大家理解，我们以单向绑定为例：
 
 ```js
 import {oneWayBind, twoWayBind} from 'react-databinding/react-data-bind';
 
-//by manual
 class SampleComponent extends React.Component {
 
+	//编程式
 	render() {
 		let $ = oneWayBind(this.props);
 		return (<div>
@@ -64,9 +61,9 @@ class SampleComponent extends React.Component {
 ```js
 import {oneWayBind, twoWayBind} from 'react-databinding/react-decorator';
 
-//with decorator
 class SampleComponent extends React.Component {
 
+	//声明式
 	@oneWayBind()
 	render($) {
 		return (<div>
@@ -77,20 +74,19 @@ class SampleComponent extends React.Component {
 }
 ```
 
-If you choose the style of decorator, remember pass the binding operation (`$` in our example) to the render function.
+> 如果你使用声明式，记得将绑定操作符(我们喜欢使用`$`)作为参数传递给render方法
 
+### 单向绑定 vs. 双向绑定
 
-### one-way & two-way binding
+因为React不支持数据绑定，所以催生出大量的数据绑定的代码库，但是和我们期望的方式还是有较大区别。
+我们希望的是对于使用者来说尽量少的编码（最终要在`render()`方法里面添加数据绑定逻辑），越简单越好，一看代码就能理解那种。
 
-There are many solutions to implement one-way or two-way binding in React world ,
-but we like more simple and less coding API if we use it in the `render()` function.
+下面，我们将展示我们的解决思路，看看`react-databinding`是怎么做到又快又省的。
 
-Here we will show how to get the easiest to understand and simplest to use one-way and two-way data binding in React Component.
+###### 示例1: 单向绑定
 
+在开始数据绑定前，我们要准备一个容器类组件，可以通过属性（假设属性名为`data`）传递要绑定的数据对象，为了简单，我们采用高阶组件（HOC）的定义方式：
 
-###### case 1: one-way binding
-
-First, let's prepare the container Component to create a component and pass something as props to it.
 
 ```javascript
 const data = {
@@ -104,8 +100,9 @@ const ContainerComponent = () => (
 
 ```
 
-Then goes to the `ImmutableComponent` which we will show the one-way binding
+> 在上面这段代码里面，我们看到data对象被传递到`ImmutableComponent`组件
 
+接下来，我们看看 `ImmutableComponent` 这个组件的内部实现（用到了单向绑定） ：
 
 ```javascript
 import {React} from 'react';
@@ -125,13 +122,19 @@ class ImmutableComponent extends React.Component {
 }
 ```
 
-Nothing special, just one more line to create a curried `$` function which will do the left work in the JSX part.
+从上面的代码看，和普通的React组件相比，没有什么特别奇怪的东西，只是多了一段代码来声明`$`
 
-As you see, it's quite simple to do one-way binding ,
-the magic is `$` function , it accept the path (`'data.title'`) and evaluate based on the Component's props.
+```
+let $ = oneWayBind(this.props);
+```
 
-One more thing, the `$` function can accept a default value or a lambda callback
-which will be very useful if you want to handle the null eval result.
+`$`就是在接下来的代码里面解决单向绑定的魔法符号
+
+正如代码所示，要实现单向绑定是非常简单的，其中的魔法就是`$`符号（其实是一个函数），它接受一个路径表达式(`'data.title'`) ，
+在运行时根据组件的属性来求值。
+
+> 注意：`$`符号还可以接受一个默认值，或者一个lambda表达式（要求返回一个值）。
+> 当`$`对路径表达式求值的结果为null的时候，通常我们会考虑显示一个默认值，或者动态计算出一个默认值。
 
 ```javascript
 const todolist = [{
@@ -142,26 +145,26 @@ const todolist = [{
 
 ```
 
-Show `'unknown'` if the author not defined in todo
+例如下面的示例，如果author为空的时候，就显示默认值`'unknown'`
 
 ```javascript
 $('todolist.0.author','unknown')
 ```
 
-Show comma-joined tags
+下面这个示例，如果tags不为空，就将tags的值用逗号进行分隔，否则，显示默认值`'unknown'`
 
 ```javascript
 $('todolist.0.tags', v => v ? v.join(','):'unknown')
 ```
 
-As you see, complex path is supported, the array index is taken as the key of object , please feel free to try it out.
+从上面的示例可以看出，我们支持复杂的表达式，表达式中的每一个占位字符串都会作为对象的属性进行求值。
+因为数组也是一个对象，0这个索引位会被`$`操作符当做是对数组对象的0这个属性求值。
 
+###### 示例2: 双向绑定
 
-###### case 2: two-way binding
+双向绑定和单向绑定类似，在下面的示例中我们用两个`$`符号，也就是`$$`来表示双向绑定操作符。
 
-The two-way binding is a bit different but similar. Here we use `$$` to indicate it's a two-way binding.
-
-First, let's prepare the container Component to create a component and pass something as props to it.
+首先我们还是先准备一个容器组件：
 
 ```javascript
 const data = {
@@ -175,8 +178,9 @@ const ContainerComponent = () => (
 
 ```
 
-Then goes to the `MutableComponent` which we will show the two-way binding.
+> 在上面这段代码里面，`MutableComponent`组件的命名表示这个是一个可以改变的组件。
 
+接下来，我们看看 `MutableComponent` 这个组件的内部实现（用到了双向绑定） ：
 
 ```javascript
 
