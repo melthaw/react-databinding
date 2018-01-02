@@ -206,15 +206,15 @@ class MutableComponent extends React.Component {
 
 ```
 
-In the `render()` function , the `$$` returns a composed object, so we use the `...` to expand as the input's props.
-
+在`render()`方法里面，`$$`实际上会返回一个组合对象，我们要使用`...`展开操作符来展开该对象的所有属性，并动态添加为input对象的属性。
 
 
 ### immutable-js
 
-Of course, the important [immutable-js](https://github.com/facebook/immutable-js) is supported.
+现在[immutable-js](https://github.com/facebook/immutable-js) 几乎成为了React的标配，我们对[immutable-js](https://github.com/facebook/immutable-js) 的支持也是一步到位.
 
-We try to keep the general API and immutable supported API in the same , the only different is the import part.
+为了减少大家的重复学习，我们设计了完全相同的API，因此在[immutable-js](https://github.com/facebook/immutable-js) 下使用我们的数据绑定
+和普通场景下的数据绑定是完全一样的，唯一的不同就是import部分。
 
 ```javascript
 //general
@@ -228,10 +228,9 @@ import {oneWayBind,twoWayBind} from 'react-databinding/immutable/react-decorator
 
 ```
 
+## 工作原理
 
-## How it works
-
-But how it works , what is working on the backend. Let's show more example to explain it.
+在这个章节我们将给大家介绍一下我们提供的数据绑定背后的工作原理。
 
 First,  import the `react-databinding`
 
